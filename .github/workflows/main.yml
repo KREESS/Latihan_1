@@ -1,0 +1,98 @@
+name: Laravel CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  laravel_build:
+    name: Laravel Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # Sesuaikan dengan versi PHP yang digunakan dalam proyek Laravel 11
+
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
+
+      - name: Copy file example env
+        run: cp .env.example .env
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Create File Database
+        run: touch database/database.sqlite
+
+      - name: Run Migration Database
+        run: php artisan migrate:fresh --seed
+
+      # - name: Install Breeze
+      #   run: php artisan breeze:install --no-interaction
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20' # Atur versi Node.js sesuai kebutuhan Anda
+
+      - name: Install Node.js dependencies
+        run: npm install # Atau yarn install jika Anda menggunakan Yarn
+
+      - name: Build Node.JS
+        run: npm run build
+
+  laravel_test:
+    name: Laravel Test
+    runs-on: ubuntu-latest
+    needs: laravel_build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # Sesuaikan dengan versi PHP yang digunakan dalam proyek Laravel 11
+
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
+
+      - name: Copy file example env
+        run: cp .env.example .env
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Create File Database
+        run: touch database/database.sqlite
+
+      - name: Run Migration Database
+        run: php artisan migrate:fresh --seed
+
+      # - name: Install Breeze
+      #   run: php artisan breeze:install --no-interaction
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20' # Atur versi Node.js sesuai kebutuhan Anda
+
+      - name: Install Node.js dependencies
+        run: npm install # Atau yarn install jika Anda menggunakan Yarn
+
+      - name: Build Node.JS
+        run: npm run build
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit
