@@ -3,10 +3,10 @@ name: Laravel CI
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   laravel_build:
@@ -20,7 +20,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # Sesuaikan dengan versi PHP yang digunakan dalam proyek Laravel 11
+          php-version: "8.2" # Sesuaikan dengan versi PHP yang digunakan dalam proyek Laravel 11
 
       - name: Install dependencies
         run: composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
@@ -39,11 +39,11 @@ jobs:
 
       # - name: Install Breeze
       #   run: php artisan breeze:install --no-interaction
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20' # Atur versi Node.js sesuai kebutuhan Anda
+          node-version: "20" # Atur versi Node.js sesuai kebutuhan Anda
 
       - name: Install Node.js dependencies
         run: npm install # Atau yarn install jika Anda menggunakan Yarn
@@ -63,7 +63,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # Sesuaikan dengan versi PHP yang digunakan dalam proyek Laravel 11
+          php-version: "8.2" # Sesuaikan dengan versi PHP yang digunakan dalam proyek Laravel 11
 
       - name: Install dependencies
         run: composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
@@ -82,11 +82,11 @@ jobs:
 
       # - name: Install Breeze
       #   run: php artisan breeze:install --no-interaction
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20' # Atur versi Node.js sesuai kebutuhan Anda
+          node-version: "20" # Atur versi Node.js sesuai kebutuhan Anda
 
       - name: Install Node.js dependencies
         run: npm install # Atau yarn install jika Anda menggunakan Yarn
